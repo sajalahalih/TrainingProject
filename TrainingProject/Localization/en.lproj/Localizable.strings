@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  TrainingProject
+
+  Created by saja allahaleh on 30/09/2025.
+  
+*/
+"addPerson" = "Add Person1";
+"back" = "Back";
+"infoMessage" = "Hello I am Saja :]";
+"clear" = "Clear";
+"selectedPerson" = "Selected Items: ";
+"personTableName" = "Name";
+"personTableId" = "ID";
+"personTableDescription" = "Description";
