@@ -11,10 +11,21 @@
 		BB16C9D02E8C031A0064FE6E /* ide_swiftlint.sh in Resources */ = {isa = PBXBuildFile; fileRef = BB16C9CE2E8C031A0064FE6E /* ide_swiftlint.sh */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		BB891FF22E8D08C2002DF79E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB16C8B72E89197F0064FE6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB16C8BE2E89197F0064FE6E;
+			remoteInfo = TrainingProject;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		BB16C8BF2E89197F0064FE6E /* TrainingProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrainingProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB16C9CD2E8C031A0064FE6E /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		BB16C9CE2E8C031A0064FE6E /* ide_swiftlint.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ide_swiftlint.sh; sourceTree = "<group>"; };
+		BB891FEE2E8D08C2002DF79E /* TrainingProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainingProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,10 +34,22 @@
 			path = TrainingProject;
 			sourceTree = "<group>";
 		};
+		BB891FEF2E8D08C2002DF79E /* TrainingProjectTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TrainingProjectTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BB16C8BC2E89197F0064FE6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB891FEB2E8D08C2002DF79E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +65,7 @@
 				BB16C9CD2E8C031A0064FE6E /* .swiftlint.yml */,
 				BB16C9CE2E8C031A0064FE6E /* ide_swiftlint.sh */,
 				BB16C8C12E89197F0064FE6E /* TrainingProject */,
+				BB891FEF2E8D08C2002DF79E /* TrainingProjectTests */,
 				BB16C8C02E89197F0064FE6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				BB16C8BF2E89197F0064FE6E /* TrainingProject.app */,
+				BB891FEE2E8D08C2002DF79E /* TrainingProjectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +105,29 @@
 			productReference = BB16C8BF2E89197F0064FE6E /* TrainingProject.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BB891FED2E8D08C2002DF79E /* TrainingProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB891FF62E8D08C2002DF79E /* Build configuration list for PBXNativeTarget "TrainingProjectTests" */;
+			buildPhases = (
+				BB891FEA2E8D08C2002DF79E /* Sources */,
+				BB891FEB2E8D08C2002DF79E /* Frameworks */,
+				BB891FEC2E8D08C2002DF79E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB891FF32E8D08C2002DF79E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BB891FEF2E8D08C2002DF79E /* TrainingProjectTests */,
+			);
+			name = TrainingProjectTests;
+			packageProductDependencies = (
+			);
+			productName = TrainingProjectTests;
+			productReference = BB891FEE2E8D08C2002DF79E /* TrainingProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -92,6 +140,10 @@
 				TargetAttributes = {
 					BB16C8BE2E89197F0064FE6E = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					BB891FED2E8D08C2002DF79E = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = BB16C8BE2E89197F0064FE6E;
 					};
 				};
 			};
@@ -110,6 +162,7 @@
 			projectRoot = "";
 			targets = (
 				BB16C8BE2E89197F0064FE6E /* TrainingProject */,
+				BB891FED2E8D08C2002DF79E /* TrainingProjectTests */,
 			);
 		};
 /* End PBXProject section */
@@ -121,6 +174,13 @@
 			files = (
 				BB16C9CF2E8C031A0064FE6E /* .swiftlint.yml in Resources */,
 				BB16C9D02E8C031A0064FE6E /* ide_swiftlint.sh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB891FEC2E8D08C2002DF79E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +214,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB891FEA2E8D08C2002DF79E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BB891FF32E8D08C2002DF79E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB16C8BE2E89197F0064FE6E /* TrainingProject */;
+			targetProxy = BB891FF22E8D08C2002DF79E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		BB16C8CC2E8919800064FE6E /* Debug */ = {
@@ -325,6 +400,40 @@
 			};
 			name = Release;
 		};
+		BB891FF42E8D08C2002DF79E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.TrainingProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainingProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TrainingProject";
+			};
+			name = Debug;
+		};
+		BB891FF52E8D08C2002DF79E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.TrainingProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainingProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TrainingProject";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -342,6 +451,15 @@
 			buildConfigurations = (
 				BB16C8CF2E8919800064FE6E /* Debug */,
 				BB16C8D02E8919800064FE6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB891FF62E8D08C2002DF79E /* Build configuration list for PBXNativeTarget "TrainingProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB891FF42E8D08C2002DF79E /* Debug */,
+				BB891FF52E8D08C2002DF79E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Carbon.HIToolbox
 
 protocol AddPersonViewControllerDelegate: AnyObject {
     func personDidAdd(_ sender: AddPersonViewController, person: Person)
@@ -34,13 +35,19 @@ class AddPersonViewController: NSViewController {
         setupDescriptionList()
         self.view.window?.makeFirstResponder(self)
         escMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-              if event.keyCode == 53 { // Esc
-                  self?.dismiss(self)
-                  return nil
-              }
-              return event
-          }
+            if event.keyCode == kVK_Escape { // Esc
+                self?.dismiss(self)
+                return nil
+            }
+            return event
+        }
         progressIndicator.isHidden = true
+    }
+    deinit {
+        if let escMonitor {
+            NSEvent.removeMonitor(escMonitor)
+            self.escMonitor = nil
+        }
     }
 
     // MARK: - IBOutlets
@@ -60,26 +67,27 @@ class AddPersonViewController: NSViewController {
         addPersonButton.isEnabled = false
         progressIndicator.isHidden = false
         progressIndicator.startAnimation(self)
-
+//FIXME: Inside viewModel (in unit test should use expectation start animation)
+        // start animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             guard let self = self else { return }
 
-            guard let selectedItem = self.descriptionList.selectedItem,
+            guard let selectedItem = descriptionList.selectedItem,
                   let symbolName = selectedItem.representedObject as? String,
                   let symbol = SFSymbolName(rawValue: symbolName),
-                  let person = self.viewModel.createPerson(name: self.nameTextField.stringValue, symbol: symbol)
+                  let person = viewModel.createPerson(name: nameTextField.stringValue, symbol: symbol)
             else {
-                self.progressIndicator.stopAnimation(self)
-                self.progressIndicator.isHidden = true
-                self.addPersonButton.isEnabled = true
+                progressIndicator.stopAnimation(self)
+                progressIndicator.isHidden = true
+                addPersonButton.isEnabled = true
                 return
             }
 
-            self.delegate?.personDidAdd(self, person: person)
-            self.progressIndicator.stopAnimation(self)
-            self.progressIndicator.isHidden = true
-            self.addPersonButton.isEnabled = true
-            self.dismiss(self)
+            delegate?.personDidAdd(self, person: person)
+            progressIndicator.stopAnimation(self)
+            progressIndicator.isHidden = true
+            addPersonButton.isEnabled = true
+            dismiss(self)
         }
     }
 
