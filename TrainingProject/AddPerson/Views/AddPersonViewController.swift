@@ -23,6 +23,7 @@ class AddPersonViewController: NSViewController {
     @IBOutlet weak var progressIndicator: NSProgressIndicator! {
         didSet {
             progressIndicator.startAnimation(self)
+            progressIndicator.isHidden = true
         }
     }
 
@@ -39,7 +40,6 @@ class AddPersonViewController: NSViewController {
         setupDescriptionList()
         self.view.window?.makeFirstResponder(self)
         setupEscKeyMonitor()
-        progressIndicator.isHidden = true
     }
     deinit {
         removeEscKeyMonitor()
