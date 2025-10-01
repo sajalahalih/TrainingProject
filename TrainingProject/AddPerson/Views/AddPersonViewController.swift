@@ -20,7 +20,11 @@ class AddPersonViewController: NSViewController {
     override var acceptsFirstResponder: Bool {
         return true
     }
-    @IBOutlet weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet weak var progressIndicator: NSProgressIndicator! {
+        didSet {
+            progressIndicator.startAnimation(self)
+        }
+    }
 
     // MARK: - Private properties
 
@@ -34,20 +38,11 @@ class AddPersonViewController: NSViewController {
         initViews()
         setupDescriptionList()
         self.view.window?.makeFirstResponder(self)
-        escMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            if event.keyCode == kVK_Escape { // Esc
-                self?.dismiss(self)
-                return nil
-            }
-            return event
-        }
+        setupEscKeyMonitor()
         progressIndicator.isHidden = true
     }
     deinit {
-        if let escMonitor {
-            NSEvent.removeMonitor(escMonitor)
-            self.escMonitor = nil
-        }
+        removeEscKeyMonitor()
     }
 
     // MARK: - IBOutlets
@@ -66,18 +61,14 @@ class AddPersonViewController: NSViewController {
     @IBAction func addPersonButton(_ sender: NSButton) {
         addPersonButton.isEnabled = false
         progressIndicator.isHidden = false
-        progressIndicator.startAnimation(self)
 //FIXME: Inside viewModel (in unit test should use expectation start animation)
-        // start animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             guard let self = self else { return }
-
             guard let selectedItem = descriptionList.selectedItem,
                   let symbolName = selectedItem.representedObject as? String,
                   let symbol = SFSymbolName(rawValue: symbolName),
                   let person = viewModel.createPerson(name: nameTextField.stringValue, symbol: symbol)
             else {
-                progressIndicator.stopAnimation(self)
                 progressIndicator.isHidden = true
                 addPersonButton.isEnabled = true
                 return
@@ -114,19 +105,26 @@ class AddPersonViewController: NSViewController {
         }
     }
 
+    private func setupEscKeyMonitor() {
+        escMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            if event.keyCode == kVK_Escape { // Esc
+                self?.dismiss(self)
+                return nil
+            }
+            return event
+        }
+    }
+    private func removeEscKeyMonitor() {
+        if let escMonitor {
+            NSEvent.removeMonitor(escMonitor)
+            self.escMonitor = nil
+        }
+    }
+
     // MARK: - Public functions
 
     // FIXME: Read about the hot keys / shortcut
     //    override func cancelOperation(_ sender: Any?) {
     //        self.dismiss(self)
     //    }
-
-//    override func keyDown(with event: NSEvent) {
-//        // ESC key has keyCode 53
-//        if event.keyCode == 53 {
-//            self.dismiss(self)
-//        } else {
-//            super.keyDown(with: event)
-//        }
-//    }
 }
