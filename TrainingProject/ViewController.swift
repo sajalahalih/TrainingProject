@@ -102,6 +102,22 @@ extension ViewController {
         print("🗑 Deleted person: \(personToDelete.name)")
     }
 }
+extension AddPersonViewController: AddPersonViewModelDelegate {
+    func addingPersonDidStart() {
+        progressIndicator.isHidden = false
+        addPersonButton.isEnabled = false
+    }
+
+    func addingPersonDidFinish(_ person: Person?) {
+        progressIndicator.isHidden = true
+        addPersonButton.isEnabled = true
+
+        if let person {
+            delegate?.personDidAdd(self, person: person)
+            dismiss(self)
+        }
+    }
+}
 
 // instantiate the add person view controller from the code and the controller in the storyboard
 // present it as sheet

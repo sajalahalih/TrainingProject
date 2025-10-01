@@ -20,12 +20,6 @@ class AddPersonViewController: NSViewController {
     override var acceptsFirstResponder: Bool {
         return true
     }
-    @IBOutlet weak var progressIndicator: NSProgressIndicator! {
-        didSet {
-            progressIndicator.startAnimation(self)
-            progressIndicator.isHidden = true
-        }
-    }
 
     // MARK: - Private properties
 
@@ -37,6 +31,7 @@ class AddPersonViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        viewModel.delegate = self
         setupDescriptionList()
         self.view.window?.makeFirstResponder(self)
         setupEscKeyMonitor()
@@ -55,32 +50,23 @@ class AddPersonViewController: NSViewController {
     }
     @IBOutlet weak var backButton: NSButton!
     @IBOutlet weak var addPersonButton: NSButton!
+    @IBOutlet weak var progressIndicator: NSProgressIndicator! {
+        didSet {
+            progressIndicator.startAnimation(self)
+            progressIndicator.isHidden = true
+        }
+    }
 
     // MARK: - IBActions
 
     @IBAction func addPersonButton(_ sender: NSButton) {
-        addPersonButton.isEnabled = false
-        progressIndicator.isHidden = false
-//FIXME: Inside viewModel (in unit test should use expectation start animation)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            guard let self = self else { return }
             guard let selectedItem = descriptionList.selectedItem,
                   let symbolName = selectedItem.representedObject as? String,
-                  let symbol = SFSymbolName(rawValue: symbolName),
-                  let person = viewModel.createPerson(name: nameTextField.stringValue, symbol: symbol)
-            else {
-                progressIndicator.isHidden = true
-                addPersonButton.isEnabled = true
+                  let symbol = SFSymbolName(rawValue: symbolName) else {
                 return
             }
-
-            delegate?.personDidAdd(self, person: person)
-            progressIndicator.stopAnimation(self)
-            progressIndicator.isHidden = true
-            addPersonButton.isEnabled = true
-            dismiss(self)
+            viewModel.addPerson(name: nameTextField.stringValue, symbol: symbol)
         }
-    }
 
     @IBAction func cancelButton(_ sender: NSButton) {
         dismiss(self)
@@ -120,10 +106,6 @@ class AddPersonViewController: NSViewController {
             self.escMonitor = nil
         }
     }
-
-    // MARK: - Public functions
-
-    // FIXME: Read about the hot keys / shortcut
     //    override func cancelOperation(_ sender: Any?) {
     //        self.dismiss(self)
     //    }
