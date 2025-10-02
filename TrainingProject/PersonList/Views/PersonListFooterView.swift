@@ -11,8 +11,8 @@ class PersonListFooterView: NSView {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var selectedPerson: NSTextField!
-    @IBOutlet weak var selectedPersonsLabel: NSTextField! {
+    @IBOutlet private weak var selectedPerson: NSTextField!
+    @IBOutlet private weak var selectedPersonsLabel: NSTextField! {
         didSet {
             selectedPersonsLabel.stringValue = LocalizationKey.selectedPerson.text
         }
@@ -24,12 +24,5 @@ class PersonListFooterView: NSView {
         guard let person else { return }
         let text = "\(person.name) \(person.id)"
         selectedPerson.stringValue = text
-//        let attributed = NSMutableAttributedString(string: )
-//        let symbolAttachment = NSTextAttachment()
-//        let symbolImage = NSImage(systemSymbolName: "\(person.description)", accessibilityDescription: nil)
-//        symbolAttachment.image = symbolImage
-//        let symbolString = NSAttributedString(attachment: symbolAttachment)
-//        attributed.append(symbolString)
-//        selectedPerson.attributedStringValue = attributed
     }
 }

@@ -29,11 +29,11 @@ extension PersonTableColumn {
     var localizedTitle: String {
         switch self {
         case .name:
-            return LocalizationKey.personTableName.text
+            return LocalizationKey.personListTableColumnName.text
         case .id:
-            return LocalizationKey.personTableId.text
+            return LocalizationKey.personListTableColumnId.text
         case .description:
-            return LocalizationKey.personTableDescription.text
+            return LocalizationKey.personListTableColumnDescription.text
         }
     }
 

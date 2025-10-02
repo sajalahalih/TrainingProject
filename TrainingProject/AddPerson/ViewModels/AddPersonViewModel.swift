@@ -16,13 +16,13 @@ class AddPersonViewModel {
 
     // MARK: - Public Properties
 
-    let symbols: [SFSymbolName] = [.star, .starCircle]
+    let symbols: [SFSymbol] = [.star, .starCircle]
     weak var delegate: AddPersonViewModelDelegate?
 
     // MARK: - Public functions
 
     /// Handles async creation
-    func addPerson(name: String, symbol: SFSymbolName) {
+    func addPerson(name: String, symbol: SFSymbol) {
         delegate?.addingPersonDidStart()
         DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) { [weak self] in
             let person = self?.createPerson(name: name, symbol: symbol)
@@ -35,7 +35,7 @@ class AddPersonViewModel {
 
     // MARK: - Public functions
 
-    func createPerson(name: String, symbol: SFSymbolName) -> Person? {
+    func createPerson(name: String, symbol: SFSymbol) -> Person? {
         guard !name.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
         let person = Person(name: name, description: symbol.rawValue)
         return person

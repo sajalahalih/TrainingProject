@@ -12,9 +12,12 @@ enum LocalizationKey: String, LocalizationKeyEnumProtocol {
     case addPerson
     case infoMessage
     case selectedPerson
-    case personTableName
-    case personTableId
-    case personTableDescription
+    case personListTableColumnName
+    case personListTableColumnId
+    case personListTableColumnDescription
+    case star
+    case starCircle
+    case delete
 }
 protocol LocalizationKeyEnumProtocol: RawRepresentable<String> {
 }

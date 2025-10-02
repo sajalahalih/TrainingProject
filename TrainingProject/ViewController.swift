@@ -32,7 +32,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         contentView.people = viewModel.people
-        //  contentView.delegate = footerView
+        contentView.tableActionDelegate = self
     }
 }
 
@@ -44,7 +44,6 @@ extension ViewController: PersonListContentViewDelegate {
         if let row = row {
             let selectedPerson = contentView.people[row]
             footerView.selectedPersonDidChange(selectedPerson)
-            print("person selected:\(selectedPerson.name)")
         } else {
             footerView.selectedPersonDidChange(nil)
         }
@@ -55,9 +54,9 @@ extension ViewController: PersonListHeaderViewDelegate {
     // MARK: - Public functions
 
     func addButtonDidClicked(_ headerView: PersonListHeaderView) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let storyboard = NSStoryboard(name: Storyboard.main.rawValue, bundle: nil)
         guard let addPersonVC = storyboard.instantiateController(
-                withIdentifier: "AddPersonViewController")
+            withIdentifier: AddPersonViewController.storyboardIdentifier)
                 as? AddPersonViewController
         else {return }
         addPersonVC.delegate = self
@@ -81,27 +80,21 @@ extension ViewController: AddPersonViewControllerDelegate {
     }
 }
 
-extension ViewController {
+extension ViewController: PersonTableViewDelegate {
+    func didRequestDeleteRow(at index: Int) {
+        guard index >= 0, index < viewModel.filteredPersons.count else { return }
 
-    @IBAction func deletePersonRow(_ sender: Any?) {
-        guard let table = contentView.personTableView as? PersonTableView else { return }
-        let row = table.rightClickedRow
-        guard row >= 0, row < viewModel.filteredPersons.count else { return }
+        let personToDelete = viewModel.filteredPersons[index]
 
-        let personToDelete = viewModel.filteredPersons[row]
-
-        // Remove from people array
-        if let index = viewModel.people.firstIndex(where: { $0.id == personToDelete.id }) {
-            viewModel.people.remove(at: index)
+        if let row = viewModel.people.firstIndex(where: { $0.id == personToDelete.id }) {
+            viewModel.people.remove(at: row)
         }
 
-        // Refresh filtered list
         viewModel.filterPersons(by: "")
         contentView.people = viewModel.filteredPersons
-
-        print("🗑 Deleted person: \(personToDelete.name)")
     }
 }
+
 extension AddPersonViewController: AddPersonViewModelDelegate {
     func addingPersonDidStart() {
         progressIndicator.isHidden = false
@@ -119,6 +112,12 @@ extension AddPersonViewController: AddPersonViewModelDelegate {
     }
 }
 
+extension NSViewController {
+
+    class var storyboardIdentifier: String {
+        return String(describing: Self.self)
+    }
+}
 // instantiate the add person view controller from the code and the controller in the storyboard
 // present it as sheet
 // sheet vs modal

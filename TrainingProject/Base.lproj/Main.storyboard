@@ -912,7 +912,7 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="DescriptionCellView" id="Hp8-nB-jrV" customClass="DescriptionCellView" customModule="TrainingProject" customModuleProvider="target">
+                                                                <tableCellView identifier="ImageCellView" id="Hp8-nB-jrV" customClass="ImageCellView" customModule="TrainingProject" customModuleProvider="target">
                                                                     <rect key="frame" x="139" y="0.0" width="636" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>

@@ -1,5 +1,5 @@
 //
-//  DescriptionCellView.swift
+//  ImageCellView.swift
 //  TrainingProject
 //
 //  Created by saja allahaleh on 29/09/2025.
@@ -7,11 +7,11 @@
 
 import Cocoa
 
-class DescriptionCellView: NSTableCellView {
+class ImageCellView: NSTableCellView {
 
     // MARK: - Public properties
 
-    var descriptionText: String? {
+    var sfSymbol: SFSymbol? {
         didSet {
             populateData()
         }
@@ -24,7 +24,7 @@ class DescriptionCellView: NSTableCellView {
     // MARK: - Private functions
 
     private func populateData() {
-        let symbol = descriptionText ?? "square.and.arrow.up"
-        cellDescription.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
+        let symbol = sfSymbol ?? .star
+        cellDescription.image = NSImage(systemSymbolName: symbol.rawValue, accessibilityDescription: nil)
     }
 }

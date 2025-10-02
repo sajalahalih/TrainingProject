@@ -28,14 +28,14 @@ final class AddPersonViewModelTests: XCTestCase {
 
     func testCreatePersonValidInput() {
         let expectedPersonName = "Test"
-        let expectedPersonSymbol = SFSymbolName.star
+        let expectedPersonSymbol = SFSymbol.star
         let person = viewModel.createPerson(name: expectedPersonName, symbol: expectedPersonSymbol)
         XCTAssertEqual(person?.name, expectedPersonName)
         XCTAssertEqual(person?.description, expectedPersonSymbol.rawValue)
     }
 
     func testCreatePersonNil() {
-        let expectedPersonSymbol = SFSymbolName.star
+        let expectedPersonSymbol = SFSymbol.star
         let person = viewModel.createPerson(name: "", symbol: expectedPersonSymbol)
         XCTAssertNil(person)
     }
@@ -56,7 +56,7 @@ final class AddPersonViewModelTests: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             XCTAssertTrue(self.mockDelegate.didFinishCalled)
             XCTAssertEqual(self.mockDelegate.receivedPerson?.name, "Test")
-            XCTAssertEqual(self.mockDelegate.receivedPerson?.description, SFSymbolName.star.rawValue)
+            XCTAssertEqual(self.mockDelegate.receivedPerson?.description, SFSymbol.star.rawValue)
             expectationFinish.fulfill()
         }
 

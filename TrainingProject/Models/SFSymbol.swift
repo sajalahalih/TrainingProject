@@ -1,5 +1,5 @@
 //
-//  SFSymbolName.swift
+//  SFSymbol.swift
 //  TrainingProject
 //
 //  Created by saja allahaleh on 29/09/2025.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-enum SFSymbolName: String, CaseIterable {
+enum SFSymbol: String, CaseIterable {
     case star = "star"
     case starCircle = "star.circle"
 }
 
-extension SFSymbolName {
+extension SFSymbol {
     var title: String {
         switch self {
         case .star:
-            return "Star"
+            return LocalizationKey.star.text
         case .starCircle:
-            return "Star Circle"
+            return LocalizationKey.starCircle.text
         }
     }
 }

@@ -10,6 +10,9 @@
 "infoMessage" = "Hello I am Saja :]";
 "clear" = "Clear";
 "selectedPerson" = "Selected Items: ";
-"personTableName" = "Name";
-"personTableId" = "ID";
-"personTableDescription" = "Description";
+"personListTableColumnName" = "Name";
+"personListTableColumnId" = "ID";
+"personListTableColumnDescription" = "Description";
+"star" = "Star";
+"starCircle" = "Star Circle";
+"delete" = "Delete";

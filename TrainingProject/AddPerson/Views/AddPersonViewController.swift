@@ -17,9 +17,6 @@ class AddPersonViewController: NSViewController {
     // MARK: - Public properties
 
     weak var delegate: AddPersonViewControllerDelegate?
-    override var acceptsFirstResponder: Bool {
-        return true
-    }
 
     // MARK: - Private properties
 
@@ -33,7 +30,6 @@ class AddPersonViewController: NSViewController {
         initViews()
         viewModel.delegate = self
         setupDescriptionList()
-        self.view.window?.makeFirstResponder(self)
         setupEscKeyMonitor()
     }
     deinit {
@@ -59,10 +55,10 @@ class AddPersonViewController: NSViewController {
 
     // MARK: - IBActions
 
-    @IBAction func addPersonButton(_ sender: NSButton) {
+    @IBAction private func addPersonButton(_ sender: NSButton) {
             guard let selectedItem = descriptionList.selectedItem,
                   let symbolName = selectedItem.representedObject as? String,
-                  let symbol = SFSymbolName(rawValue: symbolName) else {
+                  let symbol = SFSymbol(rawValue: symbolName) else {
                 return
             }
             viewModel.addPerson(name: nameTextField.stringValue, symbol: symbol)
@@ -79,21 +75,28 @@ class AddPersonViewController: NSViewController {
         addPersonButton?.title = LocalizationKey.addPerson.text
     }
 
+    private func makeMenuItem(for symbol: SFSymbol) -> NSMenuItem {
+        let menuItem = NSMenuItem(title: symbol.title, action: nil, keyEquivalent: "")
+        menuItem.image = NSImage(systemSymbolName: symbol.rawValue,
+                                 accessibilityDescription: symbol.rawValue)
+        menuItem.representedObject = symbol.rawValue
+        return menuItem
+    }
+
     private func setupDescriptionList() {
         descriptionList.removeAllItems()
-        guard let menu = descriptionList.menu else { return }
+        guard let menu = descriptionList.menu else {
+            return
+        }
         for sfSymbol in viewModel.symbols {
-            let menuItem = NSMenuItem(title: sfSymbol.title, action: nil, keyEquivalent: "")
-            menuItem.image = NSImage(systemSymbolName: sfSymbol.rawValue,
-                                     accessibilityDescription: sfSymbol.rawValue)
-            menuItem.representedObject = sfSymbol.rawValue
+            let menuItem = makeMenuItem(for: sfSymbol)
             menu.addItem(menuItem)
         }
     }
 
     private func setupEscKeyMonitor() {
         escMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            if event.keyCode == kVK_Escape { // Esc
+            if event.keyCode == kVK_Escape { /// Esc
                 self?.dismiss(self)
                 return nil
             }
@@ -106,7 +109,4 @@ class AddPersonViewController: NSViewController {
             self.escMonitor = nil
         }
     }
-    //    override func cancelOperation(_ sender: Any?) {
-    //        self.dismiss(self)
-    //    }
 }

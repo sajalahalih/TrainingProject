@@ -24,12 +24,16 @@ class PersonListContentView: NSView {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var personTableView: NSTableView! {
+    @IBOutlet private weak var personTableView: PersonTableView! {
         didSet {
             personTableView.dataSource = self
             personTableView.delegate = self
             setupColumns()
         }
+    }
+    weak var tableActionDelegate: PersonTableViewDelegate? {
+        get { personTableView.actionDelegate }
+        set { personTableView.actionDelegate = newValue }
     }
 
     // MARK: - Private Function
@@ -61,25 +65,9 @@ extension PersonListContentView: NSTableViewDelegate {
         guard let column = PersonTableColumn( rawValue: tableColumn.identifier.rawValue) else { return nil }
         switch column {
         case .name, .id:
-            let identifier = NSUserInterfaceItemIdentifier("TextCellView")
-            guard let cellView = tableView
-                .makeView(withIdentifier: identifier, owner: self) as? TextCellView else {
-                return nil
-            }
-            cellView.title = (column == .name) ? person.name : String(person.id)
-            return cellView
+            return makeTextCell(for: person, column: column)
         case .description:
-            let identifier = NSUserInterfaceItemIdentifier("DescriptionCellView")
-            guard let cellView = tableView.makeView(withIdentifier: identifier, owner: self) as? DescriptionCellView else {
-                return nil
-            }
-//            if let symbol = SFSymbolName(rawValue: rawData.description) {
-//                cellView.descriptionText = symbol.rawValue
-//            } else {
-//                cellView.descriptionText = "questionmark.circle"
-//            }
-            cellView.descriptionText = person.description
-            return cellView
+            return makeImageCell(for: person)
         }
     }
 
@@ -92,6 +80,33 @@ extension PersonListContentView: NSTableViewDelegate {
         }
     }
 
+    // MARK: - Private Functions
+
+    private func getSFSymbol(description: String) -> SFSymbol? {
+        if description == "star" {
+            return .star
+        } else if description == "star.circle" {
+            return .starCircle
+        } else {
+            return nil
+        }
+    }
+
+    private func makeTextCell(for person: Person, column: PersonTableColumn) -> TextCellView? {
+        guard let cellView = personTableView.makeView(withIdentifier: TextCellView.cellIdentifier, owner: self) as? TextCellView else {
+            return nil
+        }
+        cellView.title = (column == .name) ? person.name : String(person.id)
+        return cellView
+    }
+
+    private func makeImageCell(for person: Person) -> ImageCellView? {
+        guard let cellView = personTableView.makeView(withIdentifier: ImageCellView.cellIdentifier, owner: self) as? ImageCellView else {
+            return nil
+        }
+        cellView.sfSymbol = getSFSymbol(description: person.description)
+        return cellView
+    }
 }
 extension PersonListContentView: NSTableViewDataSource {
 
@@ -99,5 +114,13 @@ extension PersonListContentView: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         return people.count
+    }
+}
+extension NSTableCellView {
+
+    // MARK: - Public properties
+
+    class var cellIdentifier: NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier(rawValue: String(describing: Self.self))
     }
 }

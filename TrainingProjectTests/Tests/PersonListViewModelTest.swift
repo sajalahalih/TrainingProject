@@ -51,7 +51,7 @@ final class PersonListViewModelTest: XCTestCase {
         viewModel.people = [person]
 
         guard let data = UserDefaults.standard.data(forKey: "personsData") else {
-        XCTFail("No data saved to UserDefaults")
+            XCTFail("No data saved to UserDefaults")
             return
         }
         let decoded = try JSONDecoder().decode([Person].self, from: data)
@@ -60,4 +60,13 @@ final class PersonListViewModelTest: XCTestCase {
         XCTAssertEqual(decoded.first?.name, "Alice")
         XCTAssertEqual(decoded.first?.description, "star")
     }
+
+    func testSavePersonsFailure() {
+        struct BadEncodable: Encodable {
+            func encode(to encoder: Encoder) throws {
+                throw NSError(domain: "EncodingError", code: -1, userInfo: nil)
+            }
+        }
+    }
+
 }

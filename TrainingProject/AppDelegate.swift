@@ -26,9 +26,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 }
-
-extension String {
-    var localized: String {
-        NSLocalizedString(self, comment: "")
-    }
-}
