@@ -10,8 +10,13 @@ import XCTest
 @testable import TrainingProject
 
 final class AddPersonViewModelTests: XCTestCase {
+
+    // MARK: - Private Properties
+
     private var viewModel: AddPersonViewModel!
     private var mockDelegate: MockAddPersonDelegate!
+
+    // MARK: - Life Cycle
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -26,7 +31,9 @@ final class AddPersonViewModelTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testCreatePersonValidInput() {
+    // MARK: - Private Functions
+
+    private func testCreatePersonValidInput() {
         let expectedPersonName = "Test"
         let expectedPersonSymbol = SFSymbol.star
         let person = viewModel.createPerson(name: expectedPersonName, symbol: expectedPersonSymbol)
@@ -34,22 +41,22 @@ final class AddPersonViewModelTests: XCTestCase {
         XCTAssertEqual(person?.description, expectedPersonSymbol.rawValue)
     }
 
-    func testCreatePersonNil() {
+    private func testCreatePersonNil() {
         let expectedPersonSymbol = SFSymbol.star
         let person = viewModel.createPerson(name: "", symbol: expectedPersonSymbol)
         XCTAssertNil(person)
     }
 
-    func testSymbolsArray() {
+    private func testSymbolsArray() {
         let symbols = viewModel.symbols
         XCTAssertEqual(symbols, [.star, .starCircle])
     }
 
-    func testAddPerson_CreatesPersonAndCallsDelegate() {
+    private func testAddPerson_CreatesPersonAndCallsDelegate() {
 
         let expectationStart = expectation(description: "Delegate start called")
         let expectationFinish = expectation(description: "Delegate finish called")
-
+    
         viewModel.addPerson(name: "Test", symbol: .star)
         XCTAssertTrue(mockDelegate.didStartCalled)
         expectationStart.fulfill()
@@ -65,9 +72,14 @@ final class AddPersonViewModelTests: XCTestCase {
 }
 
 class MockAddPersonDelegate: AddPersonViewModelDelegate {
+
+    // MARK: - Public Properties
+
     var didStartCalled = false
     var didFinishCalled = false
     var receivedPerson: Person?
+
+    // MARK: - Public Functions
 
     func addingPersonDidStart() {
         didStartCalled = true
